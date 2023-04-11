@@ -3,60 +3,74 @@ import java.io.*;
 public class CurrencyConverter {
     static HashMap<String, Double> currencies = new HashMap<>();
     static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-    String[] currencyType = {"usDollars", "rubes", "ukPounds", "euros", "pesos"};
+    static String[] currencyType = {"usDollars", "rubes", "ukPounds", "euros", "pesos"};
     // add Francs
     static final double usDollars = 1;
     static final double rubes = 0.013;
     static final double ukPounds = 1.20;
     static final double euro = 1.06;
     static final double peso = 0.05;
+
     public CurrencyConverter() {
         for (String curr : currencyType) {
             currencies.put(curr, 0.00);
         }
     }
+
     public void setUSDollars(double amount) {
         currencies.put("usDollars", amount);
     }
+
     public double getUSDollars() {
         return currencies.get("usDollars");
     }
+
     public void setUkPounds(double amount) {
         currencies.put("ukPounds", amount);
     }
+
     public double getUkPounds() {
         return currencies.get("ukPounds");
     }
+
     public void setEuro(double amount) {
         currencies.put("euros", amount);
     }
+
     public double getEuro() {
         return currencies.get("euros");
     }
+
     public void setRubes(double amount) {
         currencies.put("rubes", amount);
     }
+
     public double getRubes() {
         return currencies.get("rubes");
     }
+
     public void setPesos(double amount) {
         currencies.put("pesos", amount);
     }
+
     public double getPesos() {
         return currencies.get("pesos");
     }
+
     public static void main(String[] args) throws IOException {
+        // Instantiate CurrencyConverter object and set amount to 0.00
         startCurrencyConverter();
     } //end main
-    public static void startCurrencyConverter() {
-        // Instantiate CurrencyConverter object and set amount to 0.00
+
+    public static void startCurrencyConverter() throws IOException {
         CurrencyConverter myWallet = new CurrencyConverter();
         // Ask user for total amount in wallet
         boolean isOption = false;
         // this part isn't working because we aren't reassigning it a new value
         boolean continueAddingToWallet = true;
         System.out.println("Welcome to the currency converter!");
-        outer: while (!isOption || continueAddingToWallet) {
+        outer:
+        while (!isOption || continueAddingToWallet) {
             int currencyChoice = 0;
             System.out.println("Which denomination of currency do you have?\n" +
                     "None (0), US Dollars (1), UK Pounds (2), Euros (3), Pesos (4), Rubes (5)?");
@@ -69,179 +83,29 @@ public class CurrencyConverter {
             }
             if (currencyChoice < 0 || currencyChoice > 5) {
                 System.out.println("(" + currencyChoice + ") is not an option.");
-            } else if(currencyChoice == 0) {
+            } else if (currencyChoice == 0) {
                 break outer;
             } else {
                 switch (currencyChoice) {
                     case 1 -> {
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Please input the amount of dollars in your wallet.");
-                                double amount = Double.parseDouble(input.readLine());
-                                myWallet.setUSDollars(amount);
-                                validInput = true;
-                                boolean moreCurrencyValidInput = false;
-                                while (!moreCurrencyValidInput) {
-                                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
-                                    int moreCurrency = Integer.parseInt(input.readLine());
-                                    if (moreCurrency == 0) {
-                                        continueAddingToWallet = false;
-                                        moreCurrencyValidInput = true;
-                                        break outer;
-                                    }
-                                    else if (moreCurrency == 1) {
-                                        continueAddingToWallet = true;
-                                        moreCurrencyValidInput = true;
-                                    }
-                                    else {
-                                        System.out.println(moreCurrency + ": is not an option.");
-                                        moreCurrencyValidInput = false;
-                                    }
-                                }
-                            }
-                            catch (NumberFormatException e) {
-                                System.err.println(e + ": please enter a number.");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        if (startCurrencyConverterHelp(1,continueAddingToWallet, myWallet) == false)
+                            break outer;
                     }
                     case 2 -> {
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Please input the amount of pounds in your wallet.");
-                                double amount = Double.parseDouble(input.readLine());
-                                myWallet.setUkPounds(amount);
-                                validInput = true;
-                                boolean moreCurrencyValidInput = false;
-                                while (!moreCurrencyValidInput) {
-                                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
-                                    int moreCurrency = Integer.parseInt(input.readLine());
-                                    if (moreCurrency == 0) {
-                                        continueAddingToWallet = false;
-                                        moreCurrencyValidInput = true;
-                                        break outer;
-                                    }
-                                    else if (moreCurrency == 1) {
-                                        continueAddingToWallet = true;
-                                        moreCurrencyValidInput = true;
-                                    }
-                                    else {
-                                        System.out.println(moreCurrency + ": is not an option.");
-                                        moreCurrencyValidInput = false;
-                                    }
-                                }
-                            }
-                            catch (NumberFormatException e) {
-                                System.err.println(e + ": please enter a number.");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        if (startCurrencyConverterHelp(2,continueAddingToWallet, myWallet) == false)
+                            break outer;
                     }
                     case 3 -> {
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Please input the amount of euros in your wallet.");
-                                double amount = Double.parseDouble(input.readLine());
-                                myWallet.setEuro(amount);
-                                validInput = true;
-                                boolean moreCurrencyValidInput = false;
-                                while (!moreCurrencyValidInput) {
-                                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
-                                    int moreCurrency = Integer.parseInt(input.readLine());
-                                    if (moreCurrency == 0) {
-                                        continueAddingToWallet = false;
-                                        moreCurrencyValidInput = true;
-                                        break outer;
-                                    }
-                                    else if (moreCurrency == 1) {
-                                        continueAddingToWallet = true;
-                                        moreCurrencyValidInput = true;
-                                    }
-                                    else {
-                                        System.out.println(moreCurrency + ": is not an option.");
-                                        moreCurrencyValidInput = false;
-                                    }
-                                }
-                            }
-                            catch (NumberFormatException e) {
-                                System.err.println(e + ": please enter a number.");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        if (startCurrencyConverterHelp(3,continueAddingToWallet, myWallet) == false)
+                            break outer;
                     }
                     case 4 -> {
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Please input the amount of pesos in your wallet.");
-                                double amount = Double.parseDouble(input.readLine());
-                                myWallet.setPesos(amount);
-                                validInput = true;
-                                boolean moreCurrencyValidInput = false;
-                                while (!moreCurrencyValidInput) {
-                                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
-                                    int moreCurrency = Integer.parseInt(input.readLine());
-                                    if (moreCurrency == 0) {
-                                        continueAddingToWallet = false;
-                                        moreCurrencyValidInput = true;
-                                        break outer;
-                                    }
-                                    else if (moreCurrency == 1) {
-                                        continueAddingToWallet = true;
-                                        moreCurrencyValidInput = true;
-                                    }
-                                    else {
-                                        System.out.println(moreCurrency + ": is not an option.");
-                                        moreCurrencyValidInput = false;
-                                    }
-                                }
-                            }
-                            catch (NumberFormatException e) {
-                                System.err.println(e + ": please enter a number.");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        if (startCurrencyConverterHelp(4,continueAddingToWallet, myWallet) == false)
+                            break outer;
                     }
                     case 5 -> {
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Please input the amount of rubes in your wallet.");
-                                double amount = Double.parseDouble(input.readLine());
-                                myWallet.setRubes(amount);
-                                validInput = true;
-                                boolean moreCurrencyValidInput = false;
-                                while (!moreCurrencyValidInput) {
-                                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
-                                    int moreCurrency = Integer.parseInt(input.readLine());
-                                    if (moreCurrency == 0) {
-                                        continueAddingToWallet = false;
-                                        moreCurrencyValidInput = true;
-                                        break outer;
-                                    }
-                                    else if (moreCurrency == 1) {
-                                        continueAddingToWallet = true;
-                                        moreCurrencyValidInput = true;
-                                    }
-                                    else {
-                                        System.out.println(moreCurrency + ": is not an option.");
-                                        moreCurrencyValidInput = false;
-                                    }
-                                }
-                            }
-                            catch (NumberFormatException e) {
-                                System.err.println(e + ": please enter a number.");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        if (startCurrencyConverterHelp(5,continueAddingToWallet, myWallet) == false)
+                            break outer;
                     }
                 }
             }
@@ -270,33 +134,112 @@ public class CurrencyConverter {
         }
         //try for user input, catch error for string/character input
     }
-    public void makeDeposit() {
+
+    // This help method is adding amount twice. and it is wrong when you call only one currecny both
+    // in the value and the terminatig condition.
+    public static boolean startCurrencyConverterHelp(int key, boolean continueAddingToWallet, CurrencyConverter myWallet) throws IOException {
+        String type = currencySelector(key);
+
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                System.out.println("Please input the amount of " + type +" in your wallet.");
+                double amount = Double.parseDouble(input.readLine());
+                currencySetter(key, amount, myWallet);
+                validInput = true;
+                boolean moreCurrencyValidInput = false;
+                while (!moreCurrencyValidInput) {
+                    System.out.println("Do you have more currency in your wallet? No (0) Yes (1)");
+                    int moreCurrency = Integer.parseInt(input.readLine());
+                    if (moreCurrency == 0) {
+                        continueAddingToWallet = false;
+                        moreCurrencyValidInput = true;
+                        return false;
+                    } else if (moreCurrency == 1) {
+                        continueAddingToWallet = true;
+                        moreCurrencyValidInput = true;
+                    } else {
+                        System.out.println(moreCurrency + ": is not an option.");
+                        moreCurrencyValidInput = false;
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.err.println(e + ": please enter a number.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
+        return true;
+    }
+
+    public static String currencySelector(int key){
+        switch (key) {
+            case 1 -> {
+               return "Dollar";
+            }
+            case 2 -> {
+               return "Rubic";
+            }
+            case 3 -> {
+               return "Pound";
+            }
+            case 4 -> {
+               return "Euro";
+            }
+            case 5 -> {
+                return "Pesos";
+            }
+        }
+        return "*******CurrencySelector Broken******* Blame on Jeremy";
+    }
+
+    public static void currencySetter(int key, double amount, CurrencyConverter myWallet) {
+        switch (key) {
+            case 1 -> {
+                myWallet.setUSDollars(amount);
+            }
+            case 2 -> {
+                myWallet.setRubes(amount);
+            }
+            case 3 -> {
+                myWallet.setUkPounds(amount);
+            }
+            case 4 -> {
+                myWallet.setEuro(amount);
+            }
+            case 5 -> {
+                myWallet.setPesos(amount);
+            }
+        }
+    }
+
+    public void makeDeposit () {
         try {
             boolean isValid = false;
-            while(!isValid) {
+            while (!isValid) {
                 System.out.println("What would you like to deposit?\n1: USD\n2: Rubes\n3: Pounds\n4: Euro\n5: Peso");
                 int choice = Integer.parseInt(input.readLine());
                 System.out.println("How much would you like to deposit?");
                 String depositAmount = String.valueOf(Double.parseDouble(input.readLine()));
                 switch (choice) {
                     case 1 -> {
-                        currencies.put("usDollars", Double.valueOf(depositAmount));
+                        currencies.put("usDollars", getUSDollars() + Double.valueOf(depositAmount));
                         this.announceWallet();
                     }
                     case 2 -> {
-                        currencies.put("rubes", Double.valueOf(depositAmount));
+                        currencies.put("rubes", getRubes() + Double.valueOf(depositAmount));
                         this.announceWallet();
                     }
                     case 3 -> {
-                        currencies.put("ukPounds", Double.valueOf(depositAmount));
+                        currencies.put("ukPounds", getUkPounds() + Double.valueOf(depositAmount));
                         this.announceWallet();
                     }
                     case 4 -> {
-                        currencies.put("euros", Double.valueOf(depositAmount));
+                        currencies.put("euros", getEuro() + Double.valueOf(depositAmount));
                         this.announceWallet();
                     }
                     case 5 -> {
-                        currencies.put("pesos", Double.valueOf(depositAmount));
+                        currencies.put("pesos", getPesos() + Double.valueOf(depositAmount));
                         this.announceWallet();
                     }
                     default -> {
@@ -310,7 +253,7 @@ public class CurrencyConverter {
             throw new RuntimeException(e);
         }
     }
-    public void makeWithdrawal() {
+    public void makeWithdrawal () {
         try {
             System.out.println("What would you like to withdrawal?\n1: USD\n2: Rubes\n3: Pounds\n4: Euro\n5: Peso");
             int choice = Integer.parseInt(input.readLine());
@@ -364,7 +307,7 @@ public class CurrencyConverter {
             throw new RuntimeException(e);
         }
     }
-    public void announceWallet() {
+    public void announceWallet () {
         for (Map.Entry<String, Double> curr : currencies.entrySet()) {
             String key = "";
             switch (curr.getKey()) {
@@ -388,7 +331,7 @@ public class CurrencyConverter {
             System.out.println();
         }
     }
-    public void chooseOption() {
+    public void chooseOption () {
         int choice = 0;
         System.out.println("Would you like to (1) deposit currency, (2) withdraw currency, (3) convert your currency, or (4) view your currencies?");
         boolean isValid = false;
@@ -425,7 +368,7 @@ public class CurrencyConverter {
             }
         }
     }
-    public int walletWithdraw(String currencyType, double amount) {
+    public int walletWithdraw (String currencyType,double amount){
         if (currencies.get(currencyType) - amount >= 0) {
             System.out.printf("Withdrawal of %.2f successful\n", (float) amount);
             switch (currencyType) {
@@ -452,20 +395,51 @@ public class CurrencyConverter {
         }
     }
     //switch method. Switches are good for user selection
-    public void hasMoneyToConvert(int choice) {
+    public void hasMoneyToConvert ( int choice){
         switch (choice) {
             case 1 -> {
 
             }
         }
     }
-    public double convert() throws InputMismatchException {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please select which currency you would like to convert to:\n1: Rubes\n2: UK Pound\n3: Euro\n4: Peso\n5: US Dollar");
-        int choice = input.nextInt();
+    public double convert() throws InputMismatchException, IOException {
+        System.out.println("""
+                    Please select which currency you would like to convert from: 
+                    1: Rubes
+                    2: UK Pound
+                    3: Euro
+                    4: Peso
+                    5: US Dollar""");
+        int choiceFrom = Integer.parseInt(input.readLine());
+        System.out.println("""
+                    Please select which currency you would like to convert to: 
+                    1: Rubes
+                    2: UK Pound
+                    3: Euro
+                    4: Peso
+                    5: US Dollar""");
+        int choiceTo = Integer.parseInt(input.readLine());
+        String currencyKey = "";
+        switch (choiceFrom) {
+            case 1 -> {
+                currencyKey = "rubes";
+            }
+            case 2 -> {
+                currencyKey = "ukPounds";
+            }
+            case 3 -> {
+                currencyKey = "euros";
+            }
+            case 4 -> {
+                currencyKey = "pesos";
+            }
+            case 5 -> {
+                currencyKey = "usDollars";
+            }
+        }
         System.out.println("Please select how much you would like to convert");
-        double amountToConvert = input.nextDouble();
-        switch (choice) {
+        double amountToConvert = Double.parseDouble(input.readLine());
+        switch (choiceTo) {
             case 1 -> {
                 return amountToConvert * rubes;
             }
@@ -486,9 +460,12 @@ public class CurrencyConverter {
         System.out.println("Error, returning \"-1\"");
         return -1;
     }
+
     public boolean canConvert() {
         return true;
     }
+
     // check if the wallet has the currency needed to be added.
     // otherwise add.
+
 }//end class
