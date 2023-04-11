@@ -88,23 +88,23 @@ public class CurrencyConverter {
             } else {
                 switch (currencyChoice) {
                     case 1 -> {
-                        if (startCurrencyConverterHelp(1,continueAddingToWallet, myWallet) == false)
+                        if (!startCurrencyConverterHelp(1, continueAddingToWallet, myWallet))
                             break outer;
                     }
                     case 2 -> {
-                        if (startCurrencyConverterHelp(2,continueAddingToWallet, myWallet) == false)
+                        if (!startCurrencyConverterHelp(2, continueAddingToWallet, myWallet))
                             break outer;
                     }
                     case 3 -> {
-                        if (startCurrencyConverterHelp(3,continueAddingToWallet, myWallet) == false)
+                        if (!startCurrencyConverterHelp(3, continueAddingToWallet, myWallet))
                             break outer;
                     }
                     case 4 -> {
-                        if (startCurrencyConverterHelp(4,continueAddingToWallet, myWallet) == false)
+                        if (!startCurrencyConverterHelp(4, continueAddingToWallet, myWallet))
                             break outer;
                     }
                     case 5 -> {
-                        if (startCurrencyConverterHelp(5,continueAddingToWallet, myWallet) == false)
+                        if (!startCurrencyConverterHelp(5, continueAddingToWallet, myWallet))
                             break outer;
                     }
                 }
