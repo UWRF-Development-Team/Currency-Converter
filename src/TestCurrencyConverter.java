@@ -1,5 +1,4 @@
 import org.junit.Test;
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -167,13 +166,13 @@ public class TestCurrencyConverter extends CurrencyConverter {
 //        testWallet.setPesos(5.0);
 //        assertThat(-1, equalTo(walletWithdraw( "pesos", 20.0)));
 //    }
-//    @Test
-//    public void testConstructorValues() {
-//        assertThat(0.0, equalTo(currencies.get("usDollars")));
-//        assertThat(0.0, equalTo(currencies.get("ukPounds")));
-//        assertThat(0.0, equalTo(currencies.get("rubes")));
-//        assertThat(0.0, equalTo(currencies.get("euros")));
-//        assertThat(0.0, equalTo(currencies.get("pesos")));
-//    }
+    @Test
+    public void testConstructorValues() {
+        assertThat(0.0, equalTo(currencies.get("usDollars")));
+        assertThat(0.0, equalTo(currencies.get("ukPounds")));
+        assertThat(0.0, equalTo(currencies.get("rubes")));
+        assertThat(0.0, equalTo(currencies.get("euros")));
+        assertThat(0.0, equalTo(currencies.get("pesos")));
+    }
 
 }
