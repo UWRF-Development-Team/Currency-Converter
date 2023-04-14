@@ -1,7 +1,7 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class CurrencyConverterV2 {
+    // Do we take this object-oriented for JUnit
     // Currency Constant Values
     final double DOLLAR = 1;
     final double EURO = 1.06;
@@ -9,6 +9,7 @@ public class CurrencyConverterV2 {
     final double PESO = 0.05;
     final double POUND = 1.20;
     final double RUBE = 0.013;
+
 
     // Wallet
     static double dollarWallet = 0;
