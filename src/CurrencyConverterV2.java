@@ -1,15 +1,13 @@
 import java.util.Scanner;
-
 public class CurrencyConverterV2 {
     // Do we take this object-oriented for JUnit
-    // Currency Constant Values
-    final double DOLLAR = 1;
-    final double EURO = 1.06;
-    final double FRANC = 0.90;
-    final double PESO = 0.05;
-    final double POUND = 1.20;
-    final double RUBE = 0.013;
 
+    // Currency Constant Values
+    //  - Now located in Enum CurrencyValue
+    //  - Do CurrencyValue.SELECTED_CURRENCY.getValue() to
+    //    get the values of each currency -- replacing SELECTED_CURRENCY
+    //    with the desired currency in screaming snake (all caps and
+    //    underscores)
 
     // Wallet
     static double dollarWallet = 0;
@@ -18,7 +16,13 @@ public class CurrencyConverterV2 {
     static double pesoWallet = 0;
     static double poundWallet = 0;
     static double rubeWallet = 0;
-
+    static String currencyList = """
+                (1) - Dollars
+                (2) - Euros
+                (3) - Francs
+                (4) - Pesos
+                (5) - Pounds
+                (6) - Rubes""";
     static double[] wallet = {dollarWallet, euroWallet, francWallet, pesoWallet, poundWallet, rubeWallet};
 
     static Scanner input = new Scanner(System.in);
@@ -43,7 +47,7 @@ public class CurrencyConverterV2 {
         return wallet[2];
     }
     public static void setFrancs(double amount) {
-        ;wallet[2] = amount;
+        wallet[2] = amount;
     }
     // Get & Set Pesos
     public static double getPesos() {
@@ -70,37 +74,27 @@ public class CurrencyConverterV2 {
     }
 
     // Methods
+
     public static void convert() {
-        String currency = """
-                (1) - Dollars
-                (2) - Euros
-                (3) - Francs
-                (4) - Pesos
-                (5) - Pounds
-                (6) - Rubes""";
-
-        System.out.println("What currency would you like to convert from?" + currency);
-        int from = input.nextInt();
-        System.out.println("What currency would you like to convert to?" + currency);
-        int to = input.nextInt();
+        System.out.println("What currency would you like to convert from?\n" + currencyList);
+        int from = Utilities.makeChoiceWithinRange(new int[]{1, 6});
+        System.out.println("What currency would you like to convert to?\n" + currencyList);
+        int to = Utilities.makeChoiceWithinRange(new int[]{1, 6});
         System.out.println("How much would you like to convert?");
-        double amount = input.nextDouble();
-
-
+        double amount = Utilities.amountChoice();
+        boolean hasEnoughMoney = Utilities.hasEnoughMoney(amount, from);
+        if (hasEnoughMoney) {
+            System.out.println(Utilities.convertPrompt(from, to, amount));
+            Utilities.subtractMoney(amount, from);
+            Utilities.addMoney(Utilities.tableAmount(to, amount), to);
+        }
     }
     public static void deposit() {
-        int choice = 0;
-        System.out.println("""
-                Please choose the denomination you want to deposit:
-                (1) - Dollars
-                (2) - Euros
-                (3) - Francs
-                (4) - Pesos
-                (5) - Pounds
-                (6) - Rubes""");
-        choice = input.nextInt();
+        System.out.println("Which currency would you like to deposit?");
+        System.out.println(currencyList);
+        int choice = Utilities.makeChoiceWithinRange(new int[]{1, 6});
         System.out.println("How much would you like to deposit: ");
-        double amount = input.nextDouble();
+        double amount = Utilities.amountChoice();
         switch(choice) {
             case 1 -> {
                 setDollars(amount);
@@ -146,122 +140,67 @@ public class CurrencyConverterV2 {
                     currencyName.append("Rubes");
                 }
             }
-            System.out.printf("%s: %.2f\n", currencyName.toString(), wallet[i]);
+            int referenceLength = 25;
+            String phraseLength = String.format("%s: %.2f\n", currencyName, wallet[i]);
+            String padding = "";
+            int difference = referenceLength-phraseLength.length();
+            if (difference > 0) {
+                for (int j = 0; j < difference; j++) {
+                    padding += " ";
+                }
+            }
+            System.out.printf("%s: %s %.2f\n", currencyName, padding, wallet[i]);
         }
     }
 
     public static void withdraw() {
         int choice = 0;
-        System.out.println("""
-                What currency would you like to withdraw from: 
-                (1) - Dollars
-                (2) - Euros
-                (3) - Francs
-                (4) - Pesos
-                (5) - Pounds
-                (6) - Rubes""");
-        choice = input.nextInt();
+        System.out.println(currencyList);
+        choice = Utilities.makeChoiceWithinRange(new int[]{1, 6});
         System.out.println("How much would you like to withdraw: ");
-        double amount = input.nextDouble();
-        switch (choice) {
-            case 1 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setDollars(getDollars() - amount);
-                }
-            }
-            case 2 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setEuros(getEuros() - amount);
-                }
-            }
-            case 3 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setFrancs(getFrancs() - amount);
-                }
-            }
-            case 4 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setPesos(getPesos() - amount);
-                }
-            }
-            case 5 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setPounds(getPounds() - amount);
-                }
-            }
-            case 6 -> {
-                if (hasEnoughMoney(amount, choice)) {
-                    setRubes(getRubes() - amount);
-                }
-            }
+        double amount = Utilities.amountChoice();
+        if (Utilities.hasEnoughMoney(amount, choice)) {
+            Utilities.subtractMoney(amount, choice);
         }
-    }
-    public static boolean hasEnoughMoney(double amount, int choice) {
-        // If the choice of currency minus the amount wanted to withdraw/convert is negative,
-        // then you cannot complete the conversion or withdrawal.
-        switch (choice) {
-            // Can withdraw US Dollars
-            case 1 -> {
-                if (getDollars() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 2 -> {
-                    // Can withdraw Euros
-                if (getEuros() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 3 -> {
-                // Can withdraw Francs
-                if (getFrancs() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 4 -> {
-                // Can withdraw Pesos
-                if (getPesos() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 5 -> {
-                // Can withdraw UK Pounds
-                if (getPounds() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 6 -> {
-                // Can withdraw Rubes
-                if (getRubes() - amount < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
     public static void chooseOption() {
         System.out.println("""
                 Please choose an option:
                 (1) Convert
                 (2) Deposit
-                (3) View Currency
+                (3) View Currencies
                 (4) Withdraw""");
+        int choice = Utilities.makeChoiceWithinRange(new int[]{1, 4});
+        switch (choice) {
+            case 1 -> {
+                convert();
+            }
+            case 2 -> {
+                deposit();
+            }
+            case 3 -> {
+                viewCurrencies();
+            }
+            case 4 -> {
+                withdraw();
+            }
+        }
+    }
+    public static void startCurrencyConverter() {
+        boolean continueConverting = true;
+        while (continueConverting) {
+            chooseOption();
+            System.out.println("Would you like to continue? (0) No (1) Yes");
+            int choice = Utilities.makeChoiceWithinRange(new int[]{1,2});
+            if (choice == 0) {
+                continueConverting = false;
+            } else {
+                continueConverting = true;
+            }
+        }
     }
     public static void main(String[] args) {
-        //viewCurrencies();
-        deposit();
-        viewCurrencies();
+        System.out.println("Welcome to the currency converter!");
+        startCurrencyConverter();
     }
 }

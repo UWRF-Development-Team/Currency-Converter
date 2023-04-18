@@ -1,12 +1,12 @@
 public class Wallet  {
-    double dollars;
-    double euros;
-    double francs;
-    double pesos;
-    double pounds;
-    double rubes;
+    private double dollars;
+    private double euros;
+    private double francs;
+    private double pesos;
+    private double pounds;
+    private double rubes;
 
-    public Wallet (double dollars,
+    public Wallet(double dollars,
                    double euros,
                    double francs,
                    double pesos,
