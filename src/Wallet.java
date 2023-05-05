@@ -1,4 +1,3 @@
-
 public class Wallet {
     private double dollars;
     private double euros;
@@ -14,7 +13,6 @@ public class Wallet {
                 (4) - Pesos
                 (5) - Pounds
                 (6) - Rubes""";
-
     public Wallet() {
         this.dollars = 0.00;
         this.euros = 0.00;
@@ -23,7 +21,6 @@ public class Wallet {
         this.pounds = 0.00;
         this.rubes = 0.00;
         this.walletArray = new double[]{dollars, euros, francs, pesos, pounds, rubes};
-
     }
     // Get & Set Dollars
     public double getDollars() {
@@ -32,7 +29,6 @@ public class Wallet {
     public void setDollars(double amount) {
         this.dollars = amount;
     }
-
     // Get & Set Euros
     public double getEuros() {
         return this.euros;
@@ -40,7 +36,6 @@ public class Wallet {
     public void setEuros(double amount) {
         this.euros = amount;
     }
-
     // Get & Set Francs
     public double getFrancs() {
         return this.francs;
@@ -55,7 +50,6 @@ public class Wallet {
     public void setPesos(double amount) {
         this.pesos = amount;
     }
-
     // Get & Set Pounds
     public double getPounds() {
         return this.pounds;
@@ -63,7 +57,6 @@ public class Wallet {
     public void setPounds(double amount) {
         this.pounds = amount;
     }
-
     // Get & Set Rubes
     public double getRubes() {
         return this.rubes;
@@ -71,7 +64,6 @@ public class Wallet {
     public void setRubes(double amount) {
         this.rubes = amount;
     }
-
     // Get & Set Wallet
     public double[] getWalletArray() {
         return this.walletArray;
@@ -90,7 +82,6 @@ public class Wallet {
             this.addMoney(Utilities.tableAmount(to, amount), to);
         }
     }
-
     public void deposit() {
         System.out.println("Which currency would you like to deposit?");
         System.out.println(currencyList);
@@ -160,7 +151,6 @@ public class Wallet {
             System.out.printf("%s: %s %.2f\n", currencyName, padding, walletAmount);
         }
     }
-
     public void withdraw() {
         int choice = 0;
         System.out.println(currencyList);

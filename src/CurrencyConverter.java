@@ -1,4 +1,3 @@
-import java.util.Scanner;
 public class CurrencyConverter {
     Wallet wallet;
     public CurrencyConverter(Wallet wallet) {
