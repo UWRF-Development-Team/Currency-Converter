@@ -1,17 +1,11 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
-public class Utilities extends CurrencyConverterV2 {
+public class Utilities extends Wallet {
     static Scanner input = new Scanner(System.in);
-
-    public static void print(String phrase) {
-        System.out.println(phrase);
-    }
-
     public static String betweenNumsPrompt(int[] range) {
         return "Please choose an integer between " + range[0] + " and "
                 + range[1] + ".";
     }
-
     public static int makeChoiceWithinRange(int[] range) {
         int choice = 0;
         boolean inRange = false;
@@ -24,7 +18,7 @@ public class Utilities extends CurrencyConverterV2 {
             }
             if (range[1] == 2) {
                 inRange = switch (choice) {
-                    case 0, 1 -> true;
+                    case 1, 2 -> true;
                     default -> false;
                 };
             } else if (range[1] == 4) {
@@ -44,77 +38,9 @@ public class Utilities extends CurrencyConverterV2 {
         }
         return choice;
     }
-
-    public static boolean hasEnoughMoney(double amount, int choice) {
-        // If the choice of currency minus the amount wanted to withdraw/convert is negative,
-        // then you cannot complete the conversion or withdrawal.
-        switch (choice) {
-            // Can withdraw US Dollars
-            case 1 -> {
-                if (0 > getDollars() - amount) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 2 -> {
-                // Can withdraw Euros
-                if (getEuros() - amount < 0) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 3 -> {
-                // Can withdraw Francs
-                if (getFrancs() - amount < 0) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 4 -> {
-                // Can withdraw Pesos
-                if (getPesos() - amount < 0) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 5 -> {
-                // Can withdraw UK Pounds
-                if (getPounds() - amount < 0) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            case 6 -> {
-                // Can withdraw Rubes
-                if (getRubes() - amount < 0) {
-                    System.out.println(overdraftPrompt());
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            default -> {
-                System.out.println(choice + " is not an option.\n" +
-                        Utilities.betweenNumsPrompt(new int[]{1, 6}));
-            }
-        }
-        return false;
-    }
-
     public static String overdraftPrompt() {
         return "Card declined. Please deposit money or use a different currency.";
     }
-
     public static double amountChoice() {
         while (true) {
             try {
@@ -125,7 +51,6 @@ public class Utilities extends CurrencyConverterV2 {
             }
         }
     }
-
     public static double tableAmount(int to, double amount) {
         return switch (to) {
             case 1 -> amount * CurrencyValue.DOLLAR.getValue();
@@ -137,8 +62,6 @@ public class Utilities extends CurrencyConverterV2 {
             default -> throw new IllegalStateException("Unexpected value: " + to);
         };
     }
-
-
     public static String convertPrompt(int from, int to, double amount) {
         String phrase = String.format("You converted %.2f %s to %.2f %s.", amount, getCurrencyName(from), tableAmount(to, amount), getCurrencyName(to));
         return phrase;
@@ -153,49 +76,5 @@ public class Utilities extends CurrencyConverterV2 {
             case 6 -> "Rubes";
            default -> throw new IllegalStateException("Unexpected value: " + choice);
        };
-    }
-    public static void subtractMoney(double amount, int choice) {
-        switch (choice) {
-            case 1 -> {
-                setDollars(getDollars() - amount);
-            }
-            case 2 -> {
-                setEuros(getEuros() - amount);
-            }
-            case 3 -> {
-                setFrancs(getFrancs() - amount);
-            }
-            case 4 -> {
-                setPesos(getPesos() - amount);
-            }
-            case 5 -> {
-                setPounds(getPounds() - amount);
-            }
-            case 6 -> {
-                setRubes(getRubes() - amount);
-            }
-        }
-    }
-        public static void addMoney(double amount, int choice) {
-        switch (choice) {
-            case 1 -> {
-                setDollars(getDollars() + amount);
-            }
-            case 2 -> {
-                setEuros(getEuros() + amount);
-            }
-            case 3 -> {
-                setFrancs(getFrancs() + amount);
-            }
-            case 4 -> {
-                setPesos(getPesos() + amount);
-            }
-            case 5 -> {
-                setPounds(getPounds() + amount);
-            }
-            case 6 -> {
-                setRubes(getRubes() + amount);
-            }
-        }
     }
 }
