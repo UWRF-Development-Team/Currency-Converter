@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 public class CurrencyValueWebAPI {
-    StringBuffer printedData;
+    StringBuilder printedData;
     private double dollarsValueFromExURL;
     private double eurosValueFromExURL;
     private double francsValueFromExURL;
@@ -20,7 +20,7 @@ public class CurrencyValueWebAPI {
     // https://docs.openexchangerates.org/reference/supported-currencies
     static ArrayList<String> tokenArrayList = new ArrayList<>();
     public CurrencyValueWebAPI() {
-        this.printedData = new StringBuffer();
+        this.printedData = new StringBuilder();
         this.THREE_LETTER_CURRENCIES = new String[]{"USD", "EUR", "CHF", "MXN", "RUB", "GBP"};
         this.dollarsValueFromExURL = 0.00;
         this.eurosValueFromExURL = 0.00;
@@ -68,7 +68,7 @@ public class CurrencyValueWebAPI {
     public void setCurrencyValueArray(int index, double amount) {
         this.currencyValueArray[index] = amount;
     }
-    public StringBuffer getPrintedDataObj() {
+    public StringBuilder getPrintedDataObj() {
         return this.printedData;
     }
     public String getPrintedData() {

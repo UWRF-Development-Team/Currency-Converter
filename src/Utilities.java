@@ -55,10 +55,10 @@ public class Utilities extends Wallet {
         return switch (to) {
             case 1 -> amount * CurrencyValueWebAPI.CurrencyValue.DOLLAR.getValue();
             case 2 -> amount * CurrencyValueWebAPI.CurrencyValue.EURO.getValue();
-            case 3 -> amount / CurrencyValueWebAPI.CurrencyValue.FRANC.getValue();
-            case 4 -> amount / CurrencyValueWebAPI.CurrencyValue.PESO.getValue();
+            case 3 -> amount * CurrencyValueWebAPI.CurrencyValue.FRANC.getValue();
+            case 4 -> amount * CurrencyValueWebAPI.CurrencyValue.PESO.getValue();
             case 5 -> amount * CurrencyValueWebAPI.CurrencyValue.POUND.getValue();
-            case 6 -> amount / CurrencyValueWebAPI.CurrencyValue.RUBLE.getValue();
+            case 6 -> amount * CurrencyValueWebAPI.CurrencyValue.RUBLE.getValue();
             default -> throw new IllegalStateException("Unexpected value: " + to);
         };
     }
