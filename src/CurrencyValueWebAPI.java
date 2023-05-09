@@ -16,9 +16,7 @@ public class CurrencyValueWebAPI {
     private double rublesValueFromExURL;
     double[] currencyValueArray;
     final String[] THREE_LETTER_CURRENCIES;
-    // https://currencysystem.com/codes/
     // https://docs.openexchangerates.org/reference/supported-currencies
-    static ArrayList<String> tokenArrayList = new ArrayList<>();
     public CurrencyValueWebAPI() {
         this.printedData = new StringBuilder();
         this.THREE_LETTER_CURRENCIES = new String[]{"USD", "EUR", "CHF", "MXN", "RUB", "GBP"};
@@ -132,18 +130,30 @@ public class CurrencyValueWebAPI {
 
     public void retrieveData() {
         try {
-            String openExURL = "https://openexchangerates.org/api/latest.json?app_id=3728c97878e94acdb905e2c909f8ed63";
-            // Contains USD, GBP
-            //https://docs.openexchangerates.org/reference/get-specific-currencies
-            URL inputFromURL = new URL(openExURL);
+            final String OPENEX_URL = "https://openexchangerates.org/api/latest.json?app_id=3728c97878e94acdb905e2c909f8ed63";
+            URL inputFromURL = new URL(OPENEX_URL);
+            if (!inputFromURL.toString().equals(OPENEX_URL) || !inputFromURL.toExternalForm().equals(OPENEX_URL)) {
+                System.out.println("Unexpected URL. Terminating...");
+                System.exit(0);
+            }
             HttpURLConnection connection = (HttpURLConnection) inputFromURL.openConnection();
             connection.setRequestMethod("GET");
-            BufferedReader parser = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(3000);
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                System.out.println("Unexpected connection status. Terminating...");
+                connection.disconnect();
+                System.exit(0);
+            }
+            BufferedReader parser = new BufferedReader(
+                                    new InputStreamReader(connection.getInputStream()));
             String catchAndUseData = "";
             while ((catchAndUseData = parser.readLine()) != null) {
                 this.addPrintedData(catchAndUseData);
             }
             parser.close();
+            connection.disconnect();
+
             this.getPrintedDataObj().delete(0, this.getPrintedData().indexOf(": {") + 1);
             this.setPrintedData(this.getPrintedData().replace("{", "")
                                                      .replace("}", "")
@@ -154,11 +164,15 @@ public class CurrencyValueWebAPI {
                                                      .replace("    ", ""));
             String[] keyValue = this.getPrintedData().split("\n");
             HashMap<String, Double> currencyHashMap = new HashMap<>();
-            this.getPrintedDataObj().delete(0, this.getPrintedDataObj().length());
             for (int i = 0; i < keyValue.length; i++) {
                 String[] singleCurrency = keyValue[i].split(" : ");
                 if (Character.isAlphabetic(singleCurrency[0].charAt(0))) {
-                    currencyHashMap.put(singleCurrency[0].trim(), Double.valueOf(String.format("%.2f", Double.parseDouble(singleCurrency[1].trim()))));
+                    String currency = singleCurrency[0].trim();
+                    Double value = Double.valueOf(String.format("%.2f", Double.parseDouble(singleCurrency[1].trim())));
+                    if (value < 0.01) {
+                        value = Double.valueOf(String.format("%.3f", Double.parseDouble(singleCurrency[1].trim())));
+                    }
+                    currencyHashMap.put(currency, value);
                 }
             }
             for (Map.Entry<String, Double> mapValues : currencyHashMap.entrySet()) {
@@ -178,7 +192,7 @@ public class CurrencyValueWebAPI {
                     case "RUB" -> {
                         this.setRublesValueFromExURL(mapValues.getValue());
                     }
-                    case "GBT" -> {
+                    case "GBP" -> {
                         this.setPoundsValueFromExURL(mapValues.getValue());
                     }
                 }
@@ -206,6 +220,7 @@ public enum CurrencyValue {
 }
     public static void main(String[] args) {
         CurrencyValueWebAPI currencyValueWebAPI = new CurrencyValueWebAPI();
+        System.out.println(currencyValueWebAPI.getPrintedData());
         for (double value : currencyValueWebAPI.getCurrencyValueArray()) {
             System.out.println(value);
         }

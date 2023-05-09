@@ -135,7 +135,7 @@ public class Wallet {
                     walletAmount = this.getPounds();
                 }
                 case 5 -> {
-                    currencyName.append("Rubes");
+                    currencyName.append("Rubles");
                     walletAmount = this.getRubles();
                 }
             }
