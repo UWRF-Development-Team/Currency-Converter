@@ -4,7 +4,7 @@ public class Wallet {
     private double francs;
     private double pesos;
     private double pounds;
-    private double rubes;
+    private double rubles;
     private double[] walletArray;
     static String currencyList = """
                 (1) - Dollars
@@ -12,15 +12,15 @@ public class Wallet {
                 (3) - Francs
                 (4) - Pesos
                 (5) - Pounds
-                (6) - Rubes""";
+                (6) - Rubles""";
     public Wallet() {
         this.dollars = 0.00;
         this.euros = 0.00;
         this.francs = 0.00;
         this.pesos = 0.00;
         this.pounds = 0.00;
-        this.rubes = 0.00;
-        this.walletArray = new double[]{dollars, euros, francs, pesos, pounds, rubes};
+        this.rubles = 0.00;
+        this.walletArray = new double[]{dollars, euros, francs, pesos, pounds, rubles};
     }
     // Get & Set Dollars
     public double getDollars() {
@@ -58,11 +58,11 @@ public class Wallet {
         this.pounds = amount;
     }
     // Get & Set Rubes
-    public double getRubes() {
-        return this.rubes;
+    public double getRubles() {
+        return this.rubles;
     }
-    public void setRubes(double amount) {
-        this.rubes = amount;
+    public void setRubles(double amount) {
+        this.rubles = amount;
     }
     // Get & Set Wallet
     public double[] getWalletArray() {
@@ -105,7 +105,7 @@ public class Wallet {
                 this.setPounds(amount);
             }
             case 6 -> {
-                this.setRubes(amount);
+                this.setRubles(amount);
             }
         }
     }
@@ -136,7 +136,7 @@ public class Wallet {
                 }
                 case 5 -> {
                     currencyName.append("Rubes");
-                    walletAmount = this.getRubes();
+                    walletAmount = this.getRubles();
                 }
             }
             int referenceLength = 25;
@@ -212,7 +212,7 @@ public class Wallet {
             }
             case 6 -> {
                 // Can withdraw Rubes
-                if (this.getRubes() - amount < 0) {
+                if (this.getRubles() - amount < 0) {
                     System.out.println(Utilities.overdraftPrompt());
                     return false;
                 } else {
@@ -244,7 +244,7 @@ public class Wallet {
                 this.setPounds(this.getPounds() - amount);
             }
             case 6 -> {
-                this.setRubes(this.getRubes() - amount);
+                this.setRubles(this.getRubles() - amount);
             }
         }
     }
@@ -266,7 +266,7 @@ public class Wallet {
                 this.setPounds(this.getPounds() + amount);
             }
             case 6 -> {
-                this.setRubes(this.getRubes() + amount);
+                this.setRubles(this.getRubles() + amount);
             }
         }
     }

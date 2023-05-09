@@ -53,12 +53,12 @@ public class Utilities extends Wallet {
     }
     public static double tableAmount(int to, double amount) {
         return switch (to) {
-            case 1 -> amount * CurrencyValue.DOLLAR.getValue();
-            case 2 -> amount * CurrencyValue.EURO.getValue();
-            case 3 -> amount / CurrencyValue.FRANC.getValue();
-            case 4 -> amount / CurrencyValue.PESO.getValue();
-            case 5 -> amount * CurrencyValue.POUND.getValue();
-            case 6 -> amount / CurrencyValue.RUBE.getValue();
+            case 1 -> amount * CurrencyValueWebAPI.CurrencyValue.DOLLAR.getValue();
+            case 2 -> amount * CurrencyValueWebAPI.CurrencyValue.EURO.getValue();
+            case 3 -> amount / CurrencyValueWebAPI.CurrencyValue.FRANC.getValue();
+            case 4 -> amount / CurrencyValueWebAPI.CurrencyValue.PESO.getValue();
+            case 5 -> amount * CurrencyValueWebAPI.CurrencyValue.POUND.getValue();
+            case 6 -> amount / CurrencyValueWebAPI.CurrencyValue.RUBLE.getValue();
             default -> throw new IllegalStateException("Unexpected value: " + to);
         };
     }
@@ -73,7 +73,7 @@ public class Utilities extends Wallet {
             case 3 -> "Francs";
             case 4 -> "Pesos";
             case 5 -> "UK Pounds";
-            case 6 -> "Rubes";
+            case 6 -> "Rubles";
            default -> throw new IllegalStateException("Unexpected value: " + choice);
        };
     }
