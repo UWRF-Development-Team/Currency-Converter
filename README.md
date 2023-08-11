@@ -1,4 +1,6 @@
-# Currency Converter
+# THIS IS NOT PROPERTY OF DR T!!! MWAHAHAHAH!
+
+## Currency Converter
 
 ---
 
