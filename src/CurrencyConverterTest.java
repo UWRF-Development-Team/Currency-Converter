@@ -13,5 +13,4 @@ public class CurrencyConverterTest {
         assertThat(0.00, equalTo(testCurrencyConverter.getWallet().getPounds()));
         assertThat(0.00, equalTo(testCurrencyConverter.getWallet().getRubles()));
     }
-
 }

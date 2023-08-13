@@ -1,3 +1,4 @@
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -127,16 +128,20 @@ public class CurrencyValueWebAPI {
     public void setRublesValueFromExURL(double rublesValueFromExURL) {
         this.rublesValueFromExURL = rublesValueFromExURL;
     }
-
+// set apikey to txt pad
     public void retrieveData() {
         try {
-            final String OPENEX_URL = "https://openexchangerates.org/api/latest.json?app_id=3728c97878e94acdb905e2c909f8ed63";
+            String apiKey = new FileDataRetriever(0,
+                    "C:\\Users\\olive\\OneDrive\\Documents\\Key Folder\\Open Exchange\\Open Exchange.txt").getData();
+            final String OPENEX_URL = "https://openexchangerates.org/api/latest" +
+                    ".json?app_id=" + apiKey;
             URL inputFromURL = new URL(OPENEX_URL);
-            if (!inputFromURL.toString().equals(OPENEX_URL) || !inputFromURL.toExternalForm().equals(OPENEX_URL)) {
+            if (!inputFromURL.toString().equals(OPENEX_URL) ||
+                    !inputFromURL.toExternalForm().equals(OPENEX_URL)) {
                 System.out.println("Unexpected URL. Terminating...");
                 System.exit(0);
             }
-            HttpURLConnection connection = (HttpURLConnection) inputFromURL.openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection) inputFromURL.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(3000);
             connection.setReadTimeout(3000);
@@ -151,9 +156,9 @@ public class CurrencyValueWebAPI {
             while ((catchAndUseData = parser.readLine()) != null) {
                 this.addPrintedData(catchAndUseData);
             }
+            System.out.println(this.getPrintedData());
             parser.close();
             connection.disconnect();
-
             this.getPrintedDataObj().delete(0, this.getPrintedData().indexOf(": {") + 1);
             this.setPrintedData(this.getPrintedData().replace("{", "")
                                                      .replace("}", "")
@@ -197,10 +202,10 @@ public class CurrencyValueWebAPI {
                     }
                 }
             }
-        } catch (MalformedURLException e) {
-            System.err.println(e);
-        } catch (IOException f) {
-            System.err.println(f);
+        } catch (MalformedURLException err) {
+            err.printStackTrace();
+        } catch (IOException err) {
+            err.printStackTrace();
         }
     }
 public enum CurrencyValue {
