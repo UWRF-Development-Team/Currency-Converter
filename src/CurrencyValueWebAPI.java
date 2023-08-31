@@ -81,53 +81,6 @@ public class CurrencyValueWebAPI {
         this.printedData.append(token);
     }
 
-    public double getDollarsValueFromExURL() {
-        return this.dollarsValueFromExURL;
-    }
-
-    public double getEurosValueFromExURL() {
-        return this.eurosValueFromExURL;
-    }
-
-    public double getFrancsValueFromExURL() {
-        return this.francsValueFromExURL;
-    }
-
-    public double getPesosValueFromExURL() {
-        return this.pesosValueFromExURL;
-    }
-
-    public double getPoundsValueFromExURL() {
-        return this.poundsValueFromExURL;
-    }
-
-    public double getRublesValueFromExURL() {
-        return this.rublesValueFromExURL;
-    }
-
-    public void setDollarsValueFromExURL(double dollarsValueFromExURL) {
-        this.dollarsValueFromExURL = dollarsValueFromExURL;
-    }
-
-    public void setEurosValueFromExURL(double eurosValueFromExURL) {
-        this.eurosValueFromExURL = eurosValueFromExURL;
-    }
-
-    public void setFrancsValueFromExURL(double francsValueFromExURL) {
-        this.francsValueFromExURL = francsValueFromExURL;
-    }
-
-    public void setPesosValueFromExURL(double pesosValueFromExURL) {
-        this.pesosValueFromExURL = pesosValueFromExURL;
-    }
-
-    public void setPoundsValueFromExURL(double poundsValueFromExURL) {
-        this.poundsValueFromExURL = poundsValueFromExURL;
-    }
-
-    public void setRublesValueFromExURL(double rublesValueFromExURL) {
-        this.rublesValueFromExURL = rublesValueFromExURL;
-    }
 // set apikey to txt pad
     public void retrieveData() {
         try {
@@ -208,6 +161,51 @@ public class CurrencyValueWebAPI {
             err.printStackTrace();
         }
     }
+
+    //------------------------------Getters-----------------------------------
+    public double getDollarsValueFromExURL() {
+        return this.dollarsValueFromExURL;
+    }
+    public double getEurosValueFromExURL() {
+        return this.eurosValueFromExURL;
+    }
+    public double getFrancsValueFromExURL() {
+        return this.francsValueFromExURL;
+    }
+    public double getPesosValueFromExURL() {
+        return this.pesosValueFromExURL;
+    }
+    public double getPoundsValueFromExURL() {
+        return this.poundsValueFromExURL;
+    }
+    public double getRublesValueFromExURL() {
+        return this.rublesValueFromExURL;
+    }
+    //------------------------------Setters-----------------------------------
+    public void setDollarsValueFromExURL(double dollarsValueFromExURL) {
+        this.dollarsValueFromExURL = dollarsValueFromExURL;
+    }
+
+    public void setEurosValueFromExURL(double eurosValueFromExURL) {
+        this.eurosValueFromExURL = eurosValueFromExURL;
+    }
+
+    public void setFrancsValueFromExURL(double francsValueFromExURL) {
+        this.francsValueFromExURL = francsValueFromExURL;
+    }
+
+    public void setPesosValueFromExURL(double pesosValueFromExURL) {
+        this.pesosValueFromExURL = pesosValueFromExURL;
+    }
+
+    public void setPoundsValueFromExURL(double poundsValueFromExURL) {
+        this.poundsValueFromExURL = poundsValueFromExURL;
+    }
+
+    public void setRublesValueFromExURL(double rublesValueFromExURL) {
+        this.rublesValueFromExURL = rublesValueFromExURL;
+    }
+    //-------------------------Enum-CurrencyValue-----------------------------
 public enum CurrencyValue {
     DOLLAR(new CurrencyValueWebAPI().getDollarsValueFromExURL()),
     EURO(new CurrencyValueWebAPI().getEurosValueFromExURL()),
@@ -223,6 +221,7 @@ public enum CurrencyValue {
         return this.value;
     }
 }
+//------------------------------------Main------------------------------------
     public static void main(String[] args) {
         CurrencyValueWebAPI currencyValueWebAPI = new CurrencyValueWebAPI();
         System.out.println(currencyValueWebAPI.getPrintedData());
