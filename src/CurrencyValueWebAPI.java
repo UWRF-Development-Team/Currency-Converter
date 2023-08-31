@@ -18,6 +18,11 @@ public class CurrencyValueWebAPI {
     double[] currencyValueArray;
     final String[] THREE_LETTER_CURRENCIES;
     // https://docs.openexchangerates.org/reference/supported-currencies
+    /**
+     * This constructor initializes the CurrencyValueWebAPI class.
+     * The constructor calls the retrieveData() method to get the initial
+     * values.
+     */
     public CurrencyValueWebAPI() {
         this.printedData = new StringBuilder();
         this.THREE_LETTER_CURRENCIES = new String[]{"USD", "EUR", "CHF", "MXN", "RUB", "GBP"};
@@ -36,9 +41,10 @@ public class CurrencyValueWebAPI {
         this.retrieveData();
 
     }
-    public String[] getTHREE_LETTER_CURRENCIES() {
-        return this.THREE_LETTER_CURRENCIES;
-    }
+    /**
+     * This method returns an array of the currency values.
+     * @return double[]
+     */
     public double[] getCurrencyValueArray() {
         for (int i = 0; i < 6; i++) {
             switch (i) {
@@ -64,30 +70,20 @@ public class CurrencyValueWebAPI {
         }
         return this.currencyValueArray;
     }
-    public void setCurrencyValueArray(int index, double amount) {
-        this.currencyValueArray[index] = amount;
-    }
-    public StringBuilder getPrintedDataObj() {
-        return this.printedData;
-    }
-    public String getPrintedData() {
-        return this.printedData.toString();
-    }
-    public void setPrintedData(String printedData) {
-        this.getPrintedDataObj().delete(0, this.getPrintedDataObj().length());
-        this.getPrintedDataObj().append(printedData);
-    }
-    public void addPrintedData(String token) {
-        this.printedData.append(token);
-    }
 
-// set apikey to txt pad
+    /**
+     * This method retrieves data from the Open Exchange Rates API.
+     * The data is then parsed and the values are updated.
+     * The values are then stored in the CurrencyValue enum.
+     */
     public void retrieveData() {
         try {
+            //----------------------Get-Data----------------------------------
+            String keyPath = "C:\\Users\\olive\\OneDrive\\Documents\\Key Folder\\Open Exchange\\Open Exchange.txt";
             String apiKey = new FileDataRetriever(0,
-                    "C:\\Users\\olive\\OneDrive\\Documents\\Key Folder\\Open Exchange\\Open Exchange.txt").getData();
-            final String OPENEX_URL = "https://openexchangerates.org/api/latest" +
-                    ".json?app_id=" + apiKey;
+                    keyPath).getData();
+            final String OPENEX_URL = "https://openexchangerates.org/api/" +
+                                      "latest.json?app_id=" + apiKey;
             URL inputFromURL = new URL(OPENEX_URL);
             if (!inputFromURL.toString().equals(OPENEX_URL) ||
                     !inputFromURL.toExternalForm().equals(OPENEX_URL)) {
@@ -103,8 +99,8 @@ public class CurrencyValueWebAPI {
                 connection.disconnect();
                 System.exit(0);
             }
-            BufferedReader parser = new BufferedReader(
-                                    new InputStreamReader(connection.getInputStream()));
+            InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+            BufferedReader parser = new BufferedReader(inputStreamReader);
             String catchAndUseData = "";
             while ((catchAndUseData = parser.readLine()) != null) {
                 this.addPrintedData(catchAndUseData);
@@ -112,6 +108,7 @@ public class CurrencyValueWebAPI {
             System.out.println(this.getPrintedData());
             parser.close();
             connection.disconnect();
+            //---------------------Parse-Data---------------------------------
             this.getPrintedDataObj().delete(0, this.getPrintedData().indexOf(": {") + 1);
             this.setPrintedData(this.getPrintedData().replace("{", "")
                                                      .replace("}", "")
@@ -126,13 +123,16 @@ public class CurrencyValueWebAPI {
                 String[] singleCurrency = keyValue[i].split(" : ");
                 if (Character.isAlphabetic(singleCurrency[0].charAt(0))) {
                     String currency = singleCurrency[0].trim();
-                    Double value = Double.valueOf(String.format("%.2f", Double.parseDouble(singleCurrency[1].trim())));
+                    Double value = Double.valueOf(String.format("%.2f",
+                                                  Double.parseDouble(singleCurrency[1].trim())));
                     if (value < 0.01) {
-                        value = Double.valueOf(String.format("%.3f", Double.parseDouble(singleCurrency[1].trim())));
+                        value = Double.valueOf(String.format("%.3f",
+                                               Double.parseDouble(singleCurrency[1].trim())));
                     }
                     currencyHashMap.put(currency, value);
                 }
             }
+            //-------------------Update-Values--------------------------------
             for (Map.Entry<String, Double> mapValues : currencyHashMap.entrySet()) {
                 switch (mapValues.getKey()) {
                     case "USD" -> {
@@ -161,8 +161,27 @@ public class CurrencyValueWebAPI {
             err.printStackTrace();
         }
     }
-
+    //-----------------------------Utilities----------------------------------
+    public void setCurrencyValueArray(int index, double amount) {
+        this.currencyValueArray[index] = amount;
+    }
+    public StringBuilder getPrintedDataObj() {
+        return this.printedData;
+    }
+    public String getPrintedData() {
+        return this.printedData.toString();
+    }
+    public void setPrintedData(String printedData) {
+        this.getPrintedDataObj().delete(0, this.getPrintedDataObj().length());
+        this.getPrintedDataObj().append(printedData);
+    }
+    public void addPrintedData(String token) {
+        this.printedData.append(token);
+    }
     //------------------------------Getters-----------------------------------
+    public String[] getTHREE_LETTER_CURRENCIES() {
+        return this.THREE_LETTER_CURRENCIES;
+    }
     public double getDollarsValueFromExURL() {
         return this.dollarsValueFromExURL;
     }
@@ -206,7 +225,11 @@ public class CurrencyValueWebAPI {
         this.rublesValueFromExURL = rublesValueFromExURL;
     }
     //-------------------------Enum-CurrencyValue-----------------------------
-public enum CurrencyValue {
+    /**
+     * This enum stores the values of the currencies.
+     * The values are updated by the CurrencyValueWebAPI class.
+     */
+    public enum CurrencyValue {
     DOLLAR(new CurrencyValueWebAPI().getDollarsValueFromExURL()),
     EURO(new CurrencyValueWebAPI().getEurosValueFromExURL()),
     FRANC(new CurrencyValueWebAPI().getFrancsValueFromExURL()),
