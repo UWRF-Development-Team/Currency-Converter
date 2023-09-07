@@ -2,14 +2,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-// This class is from theoliverlear's Java tools
-
+// This class is from theoliverlear's Java tools library.
 /**
  * This class is used to retrieve data from a file.
  */
-
-public class FileDataRetriever {
-
+public class FileLineRetriever {
     int targetLineIndex;
     String filePath;
     String data;
@@ -18,14 +15,14 @@ public class FileDataRetriever {
      * @param targetLineIndex
      * @param filePath
      */
-    public FileDataRetriever(int targetLineIndex, String filePath) {
+    public FileLineRetriever(int targetLineIndex, String filePath) {
         this.targetLineIndex = targetLineIndex;
         this.filePath = filePath;
         this.data = "";
         this.fetchData();
     }
     /**
-     * This method retrieves data from a file.
+     * This method retrieves line data from a file.
      */
     public void fetchData() {
         String line = "";

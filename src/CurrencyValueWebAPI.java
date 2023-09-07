@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 public class CurrencyValueWebAPI {
@@ -80,7 +79,7 @@ public class CurrencyValueWebAPI {
         try {
             //----------------------Get-Data----------------------------------
             String keyPath = "C:\\Users\\olive\\OneDrive\\Documents\\Key Folder\\Open Exchange\\Open Exchange.txt";
-            String apiKey = new FileDataRetriever(0,
+            String apiKey = new FileLineRetriever(0,
                     keyPath).getData();
             final String OPENEX_URL = "https://openexchangerates.org/api/" +
                                       "latest.json?app_id=" + apiKey;
