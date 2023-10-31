@@ -78,11 +78,10 @@ public class CurrencyValueWebAPI {
     public void retrieveData() {
         try {
             //----------------------Get-Data----------------------------------
-//            String keyPath = "C:\\Users\\olive\\OneDrive\\Documents\\Key Folder\\Open Exchange\\Open Exchange.txt";
-//
-//            String apiKey = new FileLineRetriever(0,
-//                    keyPath).getData();
-            String apiKey = System.getenv("OPENEX_KEY");
+            String keyPath = "src/key.txt";
+
+            String apiKey = new FileLineRetriever(0,
+                    keyPath).getData();
             final String OPENEX_URL = "https://openexchangerates.org/api/" +
                                       "latest.json?app_id=" + apiKey;
             URL inputFromURL = new URL(OPENEX_URL);
