@@ -1,3 +1,5 @@
+package org.falcon.model;
+
 public class CurrencyConverter {
     Wallet wallet;
     public CurrencyConverter(Wallet wallet) {
