@@ -1,4 +1,9 @@
-import org.junit.*;
+package junit;
+
+import org.falcon.model.CurrencyConverter;
+import org.falcon.model.Wallet;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 public class CurrencyConverterTest {
