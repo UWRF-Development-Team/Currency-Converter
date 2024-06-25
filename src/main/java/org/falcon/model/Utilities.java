@@ -1,3 +1,5 @@
+package org.falcon.model;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Utilities extends Wallet {
