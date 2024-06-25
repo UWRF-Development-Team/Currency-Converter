@@ -1,3 +1,5 @@
+package org.falcon.model;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -161,7 +163,7 @@ public class CurrencyValueWebAPI {
             err.printStackTrace();
         }
     }
-    //-----------------------------Utilities----------------------------------
+    //-----------------------------org.falcon.model.Utilities----------------------------------
     public void setCurrencyValueArray(int index, double amount) {
         this.currencyValueArray[index] = amount;
     }
