@@ -1,3 +1,5 @@
+package org.falcon.model;
+
 public class Wallet {
     private double dollars;
     private double euros;
