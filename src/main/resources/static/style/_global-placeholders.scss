@@ -1,0 +1,16 @@
+@import "global-mixins";
+@import "global-variables";
+
+%no-margin-padding {
+    @include basic-margin-padding(0, 0);
+}
+%fit-container {
+    @include size(100%, 100%);
+}
+%link-no-style {
+    text-decoration: inherit;
+    color: inherit;
+}
+%soft-border-curve {
+    border-radius: $half-percent;
+}
