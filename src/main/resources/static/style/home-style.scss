@@ -1,0 +1,38 @@
+@import "global-functions";
+@import "global-mixins";
+@import "global-variables";
+@import "global-placeholders";
+
+#value-showcase-section {
+    @include flex(center, center, column);
+    #value-showcase-title-div {
+        padding: $one-percent;
+        @extend %soft-border-curve;
+        margin: $one-percent 0;
+        background-color: $charcoal;
+        #value-showcase-title-text {
+            color: $pristine-white;
+            text-align: center;
+        }
+    }
+    #showcase-items {
+        @include flex(center, center, row);
+        flex-wrap: wrap;
+        .showcase-item {
+            @include size($ten-percent, $seven-percent);
+            @include flex(flex-start, flex-start, column);
+            margin: $one-percent;
+            padding: $one-percent;
+            @extend %soft-border-curve;
+            background-color: $pristine-white;
+            .showcase-title-and-code {
+
+            }
+            .showcase-item-value-div {
+                margin: $half-percent 0 0 0;
+                align-self: center;
+                justify-self: center;
+            }
+        }
+    }
+}
