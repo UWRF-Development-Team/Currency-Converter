@@ -1,4 +1,4 @@
-package org.falcon.model;
+package org.falcon.model.deprecated;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -164,7 +164,7 @@ public class CurrencyValueWebAPI {
             err.printStackTrace();
         }
     }
-    //-----------------------------org.falcon.model.Utilities----------------------------------
+    //-----------------------------org.falcon.model.deprecated.Utilities----------------------------------
     public void setCurrencyValueArray(int index, double amount) {
         this.currencyValueArray[index] = amount;
     }
