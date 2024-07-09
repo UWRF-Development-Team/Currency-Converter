@@ -1,4 +1,4 @@
-package org.falcon.model;
+package org.falcon.model.deprecated;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
