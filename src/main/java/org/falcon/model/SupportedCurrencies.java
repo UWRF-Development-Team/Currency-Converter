@@ -4,6 +4,7 @@ import org.falcon.entity.currency.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SupportedCurrencies {
     public static final Currency USD = new Currency("United States Dollar", "USD");
@@ -21,5 +22,14 @@ public class SupportedCurrencies {
         SUPPORTED_CURRENCIES.add(MXN);
         SUPPORTED_CURRENCIES.add(RUB);
         SUPPORTED_CURRENCIES.add(GBP);
+    }
+    public static void updateCurrenciesFromMap(Map<String, Double> currencyHashMap) {
+        for (Map.Entry<String, Double> mapValues : currencyHashMap.entrySet()) {
+            for (Currency supportedCurrency : SUPPORTED_CURRENCIES) {
+                if (mapValues.getKey().equals(supportedCurrency.getCode())) {
+                    supportedCurrency.setValue(mapValues.getValue());
+                }
+            }
+        }
     }
 }
