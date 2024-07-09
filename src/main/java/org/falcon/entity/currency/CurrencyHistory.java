@@ -19,12 +19,15 @@ public class CurrencyHistory {
     private double value;
     private LocalDateTime timeUpdated;
     public CurrencyHistory() {
-
+        this.name = "";
+        this.code = "";
+        this.value = 0.0;
+        this.timeUpdated = LocalDateTime.now();
     }
     public CurrencyHistory(Currency currency) {
         this.name = currency.getName();
         this.code = currency.getCode();
         this.value = currency.getValue();
-        this.timeUpdated = LocalDateTime.now();
+        this.timeUpdated = currency.getLastUpdated();
     }
 }
