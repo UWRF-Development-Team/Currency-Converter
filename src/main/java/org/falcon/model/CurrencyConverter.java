@@ -1,52 +1,17 @@
 package org.falcon.model;
 
+import org.falcon.entity.currency.Currency;
+
 public class CurrencyConverter {
-    Wallet wallet;
-    public CurrencyConverter(Wallet wallet) {
-        this.wallet = wallet;
+    public static Currency convertCurrency(Currency fromCurrency, Currency toCurrency, double amount) {
+        double convertedAmount = convertCurrency(fromCurrency.getValue(), toCurrency.getValue(), amount);
+        return new Currency(toCurrency.getName(), toCurrency.getCode(), convertedAmount);
     }
-    public Wallet getWallet() {
-        return this.wallet;
-    }
-    public void chooseOption() {
-        System.out.println("""
-                Please choose an option:
-                (1) Convert
-                (2) Deposit
-                (3) View Currencies
-                (4) Withdraw""");
-        int choice = Utilities.makeChoiceWithinRange(new int[]{1, 4});
-        switch (choice) {
-            case 1 -> {
-                this.getWallet().convert();
-            }
-            case 2 -> {
-                this.getWallet().deposit();
-            }
-            case 3 -> {
-                this.getWallet().viewCurrencies();
-            }
-            case 4 -> {
-                this.getWallet().withdraw();
-            }
+    public static double convertCurrency(double fromValue, double toValue, double amount) {
+        if (toValue == 0.0) {
+            throw new RuntimeException("Currency cannot be worth zero");
         }
-    }
-    public void startCurrencyConverter() {
-        boolean continueConverting = true;
-        while (continueConverting) {
-            this.chooseOption();
-            System.out.println("Would you like to continue? (1) No (2) Yes");
-            int choice = Utilities.makeChoiceWithinRange(new int[]{1,2});
-            if (choice == 1) {
-                continueConverting = false;
-            } else {
-                continueConverting = true;
-            }
-        }
-    }
-    public static void main(String[] args) {
-        System.out.println("Welcome to the currency converter!");
-        CurrencyConverter currencyConverter = new CurrencyConverter(new Wallet());
-        currencyConverter.startCurrencyConverter();
+        double ratePerUnit = toValue / fromValue;
+        return amount * ratePerUnit;
     }
 }
