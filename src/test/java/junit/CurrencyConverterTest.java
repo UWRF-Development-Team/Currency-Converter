@@ -1,7 +1,7 @@
 package junit;
 
-import org.falcon.model.CurrencyConverter;
-import org.falcon.model.Wallet;
+import org.falcon.model.deprecated.CurrencyConverter;
+import org.falcon.model.deprecated.Wallet;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
