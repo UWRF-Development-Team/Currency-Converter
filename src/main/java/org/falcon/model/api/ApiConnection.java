@@ -26,7 +26,7 @@ public class ApiConnection {
     public void update() {
         this.fetchResponse();
         Map<String, Double> currencyHashMap = this.mapResponseCurrencies();
-        this.updateCurrenciesFromMap(currencyHashMap);
+        SupportedCurrencies.updateCurrenciesFromMap(currencyHashMap);
     }
     public void fetchResponse() {
         StringBuilder responseJson = new StringBuilder();
@@ -83,30 +83,7 @@ public class ApiConnection {
         }
         return currencyHashMap;
     }
-    public void updateCurrenciesFromMap(Map<String, Double> currencyHashMap) {
-        for (Map.Entry<String, Double> mapValues : currencyHashMap.entrySet()) {
-            switch (mapValues.getKey()) {
-                case "USD" -> {
-                    SupportedCurrencies.USD.setValue(mapValues.getValue());
-                }
-                case "EUR" -> {
-                    SupportedCurrencies.EUR.setValue(mapValues.getValue());
-                }
-                case "CHF" -> {
-                    SupportedCurrencies.CHF.setValue(mapValues.getValue());
-                }
-                case "MXN" -> {
-                    SupportedCurrencies.MXN.setValue(mapValues.getValue());
-                }
-                case "RUB" -> {
-                    SupportedCurrencies.RUB.setValue(mapValues.getValue());
-                }
-                case "GBP" -> {
-                    SupportedCurrencies.GBP.setValue(mapValues.getValue());
-                }
-            }
-        }
-    }
+
     public static void disconnect(BufferedReader inputReader, HttpsURLConnection urlConnection) {
         if (inputReader != null) {
             try {
