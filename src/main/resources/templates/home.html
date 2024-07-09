@@ -5,8 +5,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Currency Converter</title>
+    <link rel="stylesheet" href="../static/style/global-style.css"
+          th:href="@{/style/global-style.css}">
+    <link rel="stylesheet" href="../static/style/home-style.css"
+          th:href="@{/style/home-style.css}">
 </head>
 <body>
-
+<header>
+    <nav>
+        <a href="/" class="link-no-style nav-item">
+            <div>
+                <h4 class="nav-text">Home</h4>
+            </div>
+        </a>
+        <a href="/currency-converter" class="link-no-style nav-item">
+            <div>
+                <h4 class="nav-text">Currency Converter</h4>
+            </div>
+        </a>
+        <a href="/currency-converter/history" class="link-no-style nav-item">
+            <div>
+                <h4 class="nav-text">History</h4>
+            </div>
+        </a>
+    </nav>
+</header>
+<main>
+    <section id="value-showcase-section">
+        <div id="value-showcase-title-div">
+            <h3 id="value-showcase-title-text">Currency Values</h3>
+        </div>
+        <div id="showcase-items">
+            <div class="showcase-item">
+                <div class="showcase-title-and-code">
+                    <div class="showcase-item-title-div">
+                        <h4 class="showcase-item-title-text">US Dollar</h4>
+                    </div>
+                    <div class="showcase-item-code-div">
+                        <h5 class="showcase-item-code-text">in <span class="item-code-id">USD</span></h5>
+                    </div>
+                </div>
+                <div class="showcase-item-value-div">
+                    <h4 class="showcase-item-value-text" id="usd-value">$1.00</h4>
+                </div>
+            </div>
+            <div class="showcase-item">
+                <div class="showcase-title-and-code">
+                    <div class="showcase-item-title-div">
+                        <h4 class="showcase-item-title-text">Euro</h4>
+                    </div>
+                    <div class="showcase-item-code-div">
+                        <h5 class="showcase-item-code-text">in <span class="item-code-id">USD</span></h5>
+                    </div>
+                </div>
+                <div class="showcase-item-value-div">
+                    <h4 class="showcase-item-value-text" id="eur-value">$1.00</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 </body>
 </html>
