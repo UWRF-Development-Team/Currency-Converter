@@ -1,6 +1,7 @@
 package org.falcon.model;
 
 import org.falcon.entity.currency.Currency;
+import org.falcon.exception.UnsupportedCurrencyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +32,13 @@ public class SupportedCurrencies {
                 }
             }
         }
+    }
+    public static Currency getByCurrencyCode(String currencyCode) {
+        for (Currency supportedCurrency : SUPPORTED_CURRENCIES) {
+            if (supportedCurrency.getCode().equals(currencyCode)) {
+                return supportedCurrency;
+            }
+        }
+        throw new UnsupportedCurrencyException();
     }
 }
