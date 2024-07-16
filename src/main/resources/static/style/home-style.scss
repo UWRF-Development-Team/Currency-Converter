@@ -3,6 +3,19 @@
 @import "global-variables";
 @import "global-placeholders";
 
+#intro-section {
+    background-color: $gold-glow;
+    @include flex(center, center, column);
+    @extend %soft-border-curve;
+    text-align: center;
+    padding: $one-percent;
+    width: $thirty-five-percent;
+    #intro-with-subtitle-div {
+        #intro-subtitle-div {
+            font-family: $source-code-font;
+        }
+    }
+}
 #value-showcase-section {
     @include flex(center, center, column);
     #value-showcase-title-div {
@@ -19,7 +32,7 @@
         @include flex(center, center, row);
         flex-wrap: wrap;
         .showcase-item {
-            @include size($ten-percent, $seven-percent);
+            @include size($twelve-percent, $seven-percent);
             @include flex(flex-start, flex-start, column);
             margin: $one-percent;
             padding: $one-percent;
