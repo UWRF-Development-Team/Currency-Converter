@@ -48,7 +48,7 @@ header {
     background-color: $charcoal;
     top: 0;
     left: 0;
-    margin: 0;
+    margin: 0 0 $one-percent 0;
     border-bottom: $absolute-black solid $very-thin-border;
     nav {
         width: 50%;
@@ -61,6 +61,16 @@ header {
             h4 {
                 color: $soft-gold;
             }
+            &:hover {
+                background-color: $soft-gold;
+                h4 {
+                    color: $light-charcoal;
+                }
+            }
         }
     }
+}
+hr {
+    border-top: $thin-border solid $charcoal;
+    box-shadow: $light-charcoal 0 0 $thirty-five-percent $sixteenth-percent;
 }
