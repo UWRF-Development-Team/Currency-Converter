@@ -18,6 +18,7 @@ import java.util.Map;
 public class ApiConnection {
     private String url;
     private String response;
+    public static final String RESPONSE_NOT_FOUND_MESSAGE = "Error: No data received from API";
     public static final String PREFIX_URL = "https://openexchangerates.org/api/latest.json?app_id=";
     public ApiConnection() {
         String apiKey = System.getenv("OPENEX_KEY");
@@ -25,7 +26,7 @@ public class ApiConnection {
     }
     public void update() {
         this.fetchResponse();
-        Map<String, Double> currencyHashMap = this.mapResponseCurrencies();
+        Map<String, Double> currencyHashMap = this.getMapResponseCurrencies();
         SupportedCurrencies.updateCurrenciesFromMap(currencyHashMap);
     }
     public void fetchResponse() {
@@ -45,8 +46,8 @@ public class ApiConnection {
             throw new RuntimeException(ex);
         } finally {
             if (responseJson.isEmpty()) {
-                this.response = "Error: No data received from API";
-                System.out.println("Error: No data received from API");
+                this.response = RESPONSE_NOT_FOUND_MESSAGE;
+                System.out.println(RESPONSE_NOT_FOUND_MESSAGE);
             } else {
                 this.response = responseJson.toString();
             }
@@ -65,7 +66,7 @@ public class ApiConnection {
                                                    .replace("    ", "");
         return jsonString;
     }
-    public Map<String, Double> mapResponseCurrencies() {
+    public Map<String, Double> getMapResponseCurrencies() {
         String[] keyValue = this.getReadableResponse().split("\n");
         Map<String, Double> currencyHashMap = new HashMap<>();
         for (int i = 0; i < keyValue.length; i++) {
