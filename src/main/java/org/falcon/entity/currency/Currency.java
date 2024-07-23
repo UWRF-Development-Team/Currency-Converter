@@ -34,7 +34,6 @@ public class Currency {
         this.code = code;
         this.value = 0;
         this.lastUpdated = LocalDateTime.now();
-        updateValueFromApi();
     }
     public Currency(String name, String code, double value) {
         this.name = name;
